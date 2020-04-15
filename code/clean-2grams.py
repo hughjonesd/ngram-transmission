@@ -9,7 +9,6 @@ import subprocess
 
 path = "../data/2gram/"
 onegram_path = "../data/1gram/"
-csv_output_file = 'cleaned-2grams.txt'
 
 onegrams = pd.read_table(onegram_path + "word-1grams.txt", 
                          names = ["word", "year", "tokens", "volumes"],
@@ -40,12 +39,12 @@ def process_gzip(file_path):
 
 
 # main loop:
-with open(path + '/' + csv_output_file, 'w') as csv_output:
-    for file in sorted(os.listdir(path)):
-        if re.search(r'gz$', file) is None:
-            continue
-        file_path = path + "/" + file
-        print(file)
-        process_gzip(file_path).to_csv(csv_output, header = False, 
-                                       index = False, sep = '\t', 
-                                       quoting = csv.QUOTE_NONE)
+for file in sorted(os.listdir(path)):
+    if re.search(r'gz$', file) is None:
+        continue
+    file_path = path + "/" + file
+    print(file)
+    csv_output = file_path[:-3] + "-cleaned.csv"
+    process_gzip(file_path).to_csv(csv_output, header = False, 
+                                   index = False, sep = '\t', 
+                                   quoting = csv.QUOTE_NONE)
