@@ -13,7 +13,7 @@ year_range = 50
 min_vols_pa = 10
 
 # for testing
-twogram_nrows = 1e9
+twogram_nrows = 1e11
 
 import pandas as pd
 import numpy as np
@@ -71,9 +71,9 @@ twograms.drop_duplicates(subset = ["word1", "word2"], inplace = True)
 twograms.sort_values("rel_pop", ascending = False, inplace = True)
 
 # sanity check
-with pd.option_context('display.max_rows', None, 'display.max_columns', None):
-    print(twograms.head(40))
+with pd.option_context('display.max_columns', None):
+    print(twograms.head(10))
 
-twograms.to_csv(output_path, sep = "\t", index = False, quoting =
-                csv.QUOTE_NONE)
+twograms.to_csv(output_path, sep = "\t", header = False, 
+                index = False, quoting = csv.QUOTE_NONE)
 
